@@ -1,6 +1,33 @@
 # MCP Client
 
-A minimal, cross-platform Python client for the Model Context Protocol (MCP). It can start a local MCP server over stdio, list available members (tools/prompts/resources), and run a simple chat flow powered by OpenAI.
+A minimal, cross-platform Python client for the **Model Context Protocol (MCP)**.
+
+> MCP is an emerging standard for securely exposing local tools, data, and capabilities to AI models. Rather than hard-coding integrations, a client negotiates what a server offers (tools, prompts, resources) at runtime. This repository provides a compact, readable example of that handshake plus a thin OpenAI-powered chat layer that can decide when to call server tools.
+
+### Why This Matters
+Modern AI workflows increasingly need structured access to local functionality (query files, run utilities, generate domain-specific responses) without leaking arbitrary system control. MCP defines a permissioned vocabulary for that. This project shows:
+
+- How to launch an MCP server over stdio in a cross-platform way (no POSIX shell required)
+- How to enumerate and display offered capabilities ("members")
+- How to let an LLM invoke those tools via OpenAI function/tool calling
+- How to keep the implementation small and approachable for learning
+
+### High-Level Flow
+```
+CLI Args → MCPClient → Start server (stdio) → Initialize ClientSession
+			↓
+		List members (--members) OR Chat loop (--chat)
+			↓
+	  Chat handler → OpenAI model → (optional) tool calls → MCP tool execution
+			↓
+		Aggregated response printed to terminal
+```
+
+### Design Principles
+- Cross-platform: Avoid shells; use `sys.executable`.
+- Minimal surface: One client class, one sample server, a handler for tool-aware chat.
+- Explicit errors: Fail fast if server script or API key missing.
+- Educational: Clear separation of concerns (`cli.py`, `mcp_client.py`, `handlers.py`).
 
 ## Features
 - Start a local MCP server script via stdio (Windows/macOS/Linux)
