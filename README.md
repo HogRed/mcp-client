@@ -87,6 +87,8 @@ mcp_server/
 
 - `mcp_server/mcp_server.py`: Example MCP server (FastMCP) running on stdio
 - `mcp_client/mcp_client.py`: Client that starts the server and opens an MCP session
+- `mcp_client/chat.py`: Hanldes chat loop for application
+- `mcp_client/cli.py`: Parses CLI arguments
 - `mcp_client/handlers.py`: Chat handler integrating OpenAI and MCP tools
 - `mcp_client/__main__.py`: CLI entry (module form)
 - `pyproject.toml`: Package metadata and console script mapping
